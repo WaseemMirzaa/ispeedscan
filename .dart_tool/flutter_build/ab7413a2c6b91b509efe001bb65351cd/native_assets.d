@@ -1,0 +1,1 @@
+ /Users/user/Documents/flutter/ispeedscan/.dart_tool/flutter_build/ab7413a2c6b91b509efe001bb65351cd/native_assets.yaml: 
