@@ -26,6 +26,18 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "barcode",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/barcode-2.2.9",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "bidi",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/bidi-2.0.12",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1",
       "packageUri": "lib/",
@@ -80,6 +92,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "cross_file",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/cross_file-0.3.4+2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "crypto",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/crypto-3.0.6",
       "packageUri": "lib/",
@@ -108,6 +126,12 @@
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/device_info_plus_platform_interface-7.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
+    },
+    {
+      "name": "extension",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/extension-0.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "fake_async",
@@ -168,12 +192,6 @@
       "rootUri": "file:///Users/user/fvm/versions/3.24.3/packages/flutter_localizations",
       "packageUri": "lib/",
       "languageVersion": "3.2"
-    },
-    {
-      "name": "flutter_overlay_window",
-      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/flutter_overlay_window-0.4.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.16"
     },
     {
       "name": "flutter_shaders",
@@ -320,6 +338,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "mime",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/mime-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "nested",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/nested-1.0.0",
       "packageUri": "lib/",
@@ -342,6 +366,12 @@
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/path-1.9.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "path_parsing",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/path_parsing-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
     },
     {
       "name": "path_provider",
@@ -378,6 +408,18 @@
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/path_provider_windows-2.3.0",
       "packageUri": "lib/",
       "languageVersion": "3.2"
+    },
+    {
+      "name": "pdf",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/pdf-3.11.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "pdfx",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/pdfx-2.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
     },
     {
       "name": "permission_handler",
@@ -422,6 +464,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "photo_view",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/photo_view-0.15.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "platform",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/platform-3.1.6",
       "packageUri": "lib/",
@@ -440,6 +488,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "qr",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/qr-3.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "rfc_6901",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/rfc_6901-0.2.0",
       "packageUri": "lib/",
@@ -450,6 +504,18 @@
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/rxdart-0.28.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "share_plus",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/share_plus-10.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "share_plus_platform_interface",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/share_plus_platform_interface-5.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
     },
     {
       "name": "shared_preferences",
@@ -572,6 +638,12 @@
       "languageVersion": "3.5"
     },
     {
+      "name": "universal_platform",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/universal_platform-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "url_launcher",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/url_launcher-6.3.0",
       "packageUri": "lib/",
@@ -680,7 +752,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2025-02-02T19:47:14.215958Z",
+  "generated": "2025-02-03T19:12:52.382819Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///Users/user/fvm/versions/3.24.3",

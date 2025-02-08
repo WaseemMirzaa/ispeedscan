@@ -16,43 +16,33 @@
 	<string>ispeedscan</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
 	<key>CFBundleURLTypes</key>
-	<array>        <dict>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
-        <key>CFBundleURLName</key>
-        <string>ispeedscan.com</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-        <string>ispeedscan</string>
-        </array>
-        </dict>
-    </array>
-    <key>FlutterDeepLinkingEnabled</key>
-    <true/>
-
-
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>ispeedscan.com</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>ispeedscan</string>
+			</array>
+		</dict>
+	</array>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-
-
 	<key>NSCameraUsageDescription</key>
-    <string>iSpeedScan would like Camera access to Scan and Save your documents as Images directly on your Device. iSpeedScsn does not use or store  User Data.</string>
+	<string>iSpeedScan would like Camera access to Scan and Save your documents as Images directly on your Device. iSpeedScsn does not use or store  User Data.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-    <string>iSpeedScan would like Photo Gallery access to Save your documents as Images directly on your Device. iSpeedScsn does not use or store  User Data.</string>
-	<key>NSCameraUsageDescription</key>
-    <string>iSpeedScan would like Camera access to Scan and Save your documents as Images directly on your Device. iSpeedScsn does not use or store  User Data.</string>
+	<string>iSpeedScan would like Photo Gallery access to Save your documents as Images directly on your Device. iSpeedScsn does not use or store  User Data.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-    <string>iSpeedScan would like Photo Gallery access to Save your documents as Images directly on your Device. iSpeedScsn does not use or store  User Data.</string>
-
-
+	<string>iSpeedScan would like Photo Gallery access to Save your documents as Images directly on your Device. iSpeedScsn does not use or store  User Data.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -72,7 +62,6 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

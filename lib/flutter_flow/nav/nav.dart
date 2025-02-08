@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../splash/splash_screen.dart';
 import '/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -49,16 +50,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.showSplashImage
-              ? Builder(
-                  builder: (context) => Container(
-                    color: FlutterFlowTheme.of(context).accent1,
-                    child: Image.asset(
-                      'assets/images/qslogo_copy.png',
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                )
-              : ScannerWidget(),
+              ? ToggleModeScreen()
+              : const ScannerWidget(),
         ),
         FFRoute(
           name: 'tevin',

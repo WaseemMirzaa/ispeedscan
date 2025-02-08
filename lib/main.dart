@@ -12,17 +12,6 @@ void main() async {
   runApp(const MyApp());
 }
 
-@pragma("vm:entry-point")
-void overlayMain() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Text('Text will ad'),
-    ),
-  );
-}
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -57,7 +46,7 @@ class _MyAppState extends State<MyApp> {
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
 
-    Future.delayed(const Duration(milliseconds: 1000),
+    Future.delayed(const Duration(milliseconds: 4500),
         () => safeSetState(() => _appStateNotifier.stopShowingSplashImage()));
   }
 

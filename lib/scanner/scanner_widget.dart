@@ -1,5 +1,12 @@
-import 'package:flutter_overlay_window/flutter_overlay_window.dart';
+import 'dart:io';
 
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
+import 'package:share_plus/share_plus.dart';
+
+import '../helper/pdf_creation.dart';
+import '../helper/shared_preference_service.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -23,108 +30,17 @@ class ScannerWidget extends StatefulWidget {
 class _ScannerWidgetState extends State<ScannerWidget>
     with TickerProviderStateMixin {
   late ScannerModel _model;
+  bool isPhotoMode = true;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final animationsMap = <String, AnimationInfo>{};
 
-  Future<void> checkAndShowOverlay() async {
-    bool? permissionGranted = await FlutterOverlayWindow.isPermissionGranted();
-
-    if (!permissionGranted) {
-      permissionGranted = await FlutterOverlayWindow.requestPermission();
-    }
-
-    if (permissionGranted != null && permissionGranted) {
-      await FlutterOverlayWindow.showOverlay(
-        height: WindowSize.fullCover,
-        width: WindowSize.matchParent,
-        alignment: OverlayAlignment.center,
-        overlayTitle: "Overlay Activated",
-        overlayContent: "This is an overlay window",
-        enableDrag: false,
-        positionGravity: PositionGravity.none,
-      );
-      await requestPermission(cameraPermission);
-      _model.teststCopy = await actions.scannerAction(
-        context,
-      );
-    }
-  }
-
   @override
   void initState() {
     super.initState();
 
-    _model = createModel(context, () => ScannerModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await checkAndShowOverlay();
-    });
-
-    animationsMap.addAll({
-      'imageOnPageLoadAnimation': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          MoveEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: const Offset(-100.0, 0.0),
-            end: const Offset(0.0, 0.0),
-          ),
-        ],
-      ),
-      'rowOnPageLoadAnimation1': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          FadeEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: 0.0,
-            end: 1.0,
-          ),
-        ],
-      ),
-      'rowOnPageLoadAnimation2': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          FadeEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: 0.0,
-            end: 1.0,
-          ),
-        ],
-      ),
-      'rowOnPageLoadAnimation3': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          FadeEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: 0.0,
-            end: 1.0,
-          ),
-        ],
-      ),
-      'rowOnPageLoadAnimation4': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          FadeEffect(
-            curve: Curves.easeInOut,
-            delay: 0.0.ms,
-            duration: 600.0.ms,
-            begin: 0.0,
-            end: 1.0,
-          ),
-        ],
-      ),
-    });
+    _loadMode();
   }
 
   @override
@@ -159,7 +75,7 @@ class _ScannerWidgetState extends State<ScannerWidget>
                   letterSpacing: 0.0,
                 ),
           ),
-          actions: const [],
+          actions: [],
           centerTitle: false,
           elevation: 2.0,
         ),
@@ -184,7 +100,8 @@ class _ScannerWidgetState extends State<ScannerWidget>
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
                             width: 90.0,
@@ -214,9 +131,11 @@ class _ScannerWidgetState extends State<ScannerWidget>
                       highlightColor: Colors.transparent,
                       onTap: () async {
                         await requestPermission(cameraPermission);
-                        await actions.scannerAction(
+                        var images = await actions.scannerAction(
                           context,
                         );
+
+                        checkPdfCreation(images);
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
@@ -232,9 +151,11 @@ class _ScannerWidgetState extends State<ScannerWidget>
                     FFButtonWidget(
                       onPressed: () async {
                         await requestPermission(cameraPermission);
-                        _model.teststeee = await actions.scannerAction(
+                        var images = await actions.scannerAction(
                           context,
                         );
+
+                        checkPdfCreation(images);
 
                         safeSetState(() {});
                       },
@@ -289,6 +210,81 @@ class _ScannerWidgetState extends State<ScannerWidget>
                             )
                           ],
                         ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          16.0, 12.0, 16.0, 0.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 60.0,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          boxShadow: const [
+                            BoxShadow(
+                              blurRadius: 5.0,
+                              color: Color(0x3416202A),
+                              offset: Offset(
+                                0.0,
+                                2.0,
+                              ),
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(12.0),
+                          shape: BoxShape.rectangle,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      12.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Selected Mode: ',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          letterSpacing: 0.0,
+                                        ),
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("PDF"),
+                                  Switch(
+                                    value: isPhotoMode,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isPhotoMode = value;
+                                      });
+                                      _toggleMode(isPhotoMode);
+                                    },
+                                    activeColor: Colors.blue,
+                                    inactiveThumbColor: Colors.grey,
+                                  ),
+                                  Text("Photo"),
+                                ],
+                              ),
+                              // Align(
+                              //   alignment: const AlignmentDirectional(0.9, 0.0),
+                              //   child: Icon(
+                              //     Icons.arrow_forward_ios,
+                              //     color: FlutterFlowTheme.of(context)
+                              //         .secondaryText,
+                              //     size: 18.0,
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        ).animateOnPageLoad(
+                            animationsMap['rowOnPageLoadAnimation1']!),
                       ),
                     ),
                     Padding(
@@ -617,5 +613,228 @@ class _ScannerWidgetState extends State<ScannerWidget>
         ),
       ),
     );
+  }
+
+  void _toggleMode(bool value) {
+    PreferenceService.saveMode(value); // Save the state
+  }
+
+  Future<void> _loadMode() async {
+    performInitState();
+
+    bool savedMode = await PreferenceService.getMode();
+
+    setState(() {
+      isPhotoMode = savedMode;
+    });
+  }
+
+  void performInitState() {
+    _model = createModel(context, () => ScannerModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await requestPermission(cameraPermission);
+      var images = await actions.scannerAction(
+        context,
+      );
+
+      checkPdfCreation(images);
+    });
+
+    animationsMap.addAll({
+      'imageOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(-100.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'rowOnPageLoadAnimation1': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'rowOnPageLoadAnimation2': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'rowOnPageLoadAnimation3': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'rowOnPageLoadAnimation4': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+    });
+  }
+
+  Future<void> checkPdfCreation(List<String> images) async {
+    if (images.isEmpty) return;
+
+    final time = DateTime.now(); // Format: MM.dd.yy_h.mmAM/PM
+    String formattedDate = DateFormat('MM.dd.yy_h.mma').format(time);
+
+    String name = 'iSpeedScan_$formattedDate.pdf';
+
+    if (!isPhotoMode) {
+      LoadingDialog.show(context);
+
+      List<File> imageFiles = [];
+
+      // print('🟢🟢🟢🟢 isPDF $isPdf');
+
+      List<Uint8List> imageBytesList = [];
+      //
+      for (String picturePath in images) {
+        File imageFile = File(picturePath);
+
+        imageFiles.add(imageFile); // Store as File
+
+        Uint8List bytes = await imageFile.readAsBytes();
+
+        imageBytesList.add(bytes); // Store as Uint8List
+      }
+
+      final fileupList = imageBytesList.map((bytes) {
+        return SerializableFile(bytes, name)
+            .toMap(); // Replace '' with appropriate filename if needed
+      }).toList();
+
+      final params = PdfMultiImgParams(
+          fileupList: fileupList,
+          filename: name,
+          selectedIndex: 0); // Get the index of the selected orientation
+
+      var pdf2 = await pdfMultiImgWithIsolate(params);
+      LoadingDialog.hide(context);
+      saveAndSharePdf(pdf2.bytes!, name);
+    }
+  }
+
+  Future<void> saveAndSharePdf(Uint8List pdfBytes, String fileName) async {
+    try {
+      // Request permission (needed only for Android, not iOS)
+      // if (Platform.isAndroid) {
+      //   if (await Permission.storage.request().isDenied) {
+      //     throw Exception('Storage permission denied.');
+      //   }
+      // }
+
+      // Define file path
+      late String filePath;
+
+      if (Platform.isAndroid) {
+        // Save to public Downloads directory on Android
+        final directory = Directory('/storage/emulated/0/Download');
+        filePath = '${directory.path}/$fileName';
+      } else if (Platform.isIOS) {
+        // Save to the temporary directory on iOS
+        final directory = await getTemporaryDirectory();
+        filePath = '${directory.path}/$fileName';
+      }
+
+      // Write the PDF bytes to the file
+      final file = File(filePath);
+      await file.writeAsBytes(pdfBytes);
+
+      // Log file path for debugging
+      print('🟢 PDF saved to: $filePath');
+
+      // Share the PDF file using XFile
+      final xFile = XFile(filePath);
+
+      await Share.shareXFiles([xFile], subject: '$fileName');
+
+      print('File saved and ready to share.');
+    } catch (e) {
+      // Handle errors gracefully
+      print('Error saving or sharing PDF: $e');
+    }
+  }
+}
+
+class LoadingDialog {
+  // static bool isShowing = false;
+  // static bool isImagePickerCalled = false;
+  // static bool isAlreadyCancelled = false;
+
+  static void show(BuildContext context, {String message = "Creating PDF..."}) {
+    // if (isAlreadyCancelled) {
+    //   isAlreadyCancelled = false;
+    //   return;
+    // }
+
+    // isShowing = true;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      // Prevent closing the dialog by tapping outside
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.white,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const CircularProgressIndicator(),
+                const SizedBox(width: 16),
+                Text(message, style: const TextStyle(fontSize: 16)),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static void hide(BuildContext context, {bool isImagePickerCalled = false}) {
+    // isShowing = false?
+
+    // Timer(Duration(seconds: 1), () {
+
+    Navigator.of(context, rootNavigator: true).pop(); // Closes the dialog
+    // });
   }
 }
