@@ -9,7 +9,7 @@ class ToggleModeScreen extends StatefulWidget {
 }
 
 class _ToggleModeScreenState extends State<ToggleModeScreen> {
-  bool isPdfMode = true; // Toggle state
+  bool? isPdfMode; // Toggle state
 
   @override
   void initState() {
@@ -25,125 +25,145 @@ class _ToggleModeScreenState extends State<ToggleModeScreen> {
           // Background Image
           Positioned.fill(
             child: Container(
-              color: FlutterFlowTheme.of(context).accent1,
-              child: Image.asset(
-                'assets/images/qslogo_copy.png',
-                fit: BoxFit.contain, // Fill entire screen
-              ),
-            ),
-          ),
-          // Bottom Buttons for Mode Toggle
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 50.0),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            16.0, 12.0, 16.0, 0.0),
-                        child: Container(
-                            width: double.infinity,
-                            height: 80.0,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              boxShadow: const [
-                                BoxShadow(
-                                  blurRadius: 5.0,
-                                  color: Color(0x3416202A),
-                                  offset: Offset(
-                                    0.0,
-                                    2.0,
-                                  ),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(12.0),
-                              shape: BoxShape.rectangle,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              12.0, 0.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Selected Mode: ',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyLarge
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              letterSpacing: 0.0,
-                                            ),
-                                      ),
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "PDF",
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyLarge
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              letterSpacing: 0.0,
-                                            ),
-                                      ),
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                      Transform.scale(
-                                        scale: 1.5, //
-                                        child: Switch(
-                                          value: isPdfMode,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              isPdfMode = value;
-                                            });
-                                            _toggleMode(isPdfMode);
-                                          },
-                                          activeColor: Colors.blue,
-                                          inactiveThumbColor: Colors.grey,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                      Text(
-                                        "Photo",
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyLarge
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              letterSpacing: 0.0,
-                                            ),
-                                      ),
-                                      SizedBox(
-                                        width: 2,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )),
-                      ),
-                    ],
-                  ),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFF173F5A), // Top color
+                    Color(0xFF4B5E76), // Middle color
+                    Color(0xFFCBCDD3), // Bottom color
+                  ],
+                  stops: [0.0, 0.5, 1.0], // Gradient stops
                 ),
               ),
             ),
           ),
+          Positioned(
+            left: 100,
+            top: 180,
+            right: 100,
+            child: Image.asset(
+              'assets/images/qslogo_copy.png',
+              fit: BoxFit.contain, // Use cover to fill the space
+            ),
+          ),
+
+          //
+          //
+          //
+          if (isPdfMode != null)
+            Positioned(
+              bottom: 150,
+              left: 0,
+              right: 0,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 50.0),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              16.0, 12.0, 16.0, 0.0),
+                          child: Container(
+                              width: double.infinity,
+                              height: 80.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                boxShadow: const [
+                                  BoxShadow(
+                                    blurRadius: 5.0,
+                                    color: Color(0x3416202A),
+                                    offset: Offset(
+                                      0.0,
+                                      2.0,
+                                    ),
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(12.0),
+                                shape: BoxShape.rectangle,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(12.0, 0.0, 0.0, 0.0),
+                                        child: Text(
+                                          'Mode: ',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyLarge
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "PDF",
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyLarge
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Transform.scale(
+                                          scale: 1.5, //
+                                          child: Switch(
+                                            value: isPdfMode!,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                isPdfMode = value;
+                                              });
+                                              _toggleMode(isPdfMode!);
+                                            },
+                                            activeColor: Colors.blue,
+                                            inactiveThumbColor: Colors.grey,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Text(
+                                          "Photo",
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyLarge
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                        SizedBox(
+                                          width: 2,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

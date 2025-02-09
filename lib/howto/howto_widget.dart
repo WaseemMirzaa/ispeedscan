@@ -142,7 +142,7 @@ class _HowtoWidgetState extends State<HowtoWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     3.0, 25.0, 3.0, 0.0),
                                 child: Text(
-                                  '1. Open the App: Launch iSpeedScan on your device, and it will immediately open the camera scanner.',
+                                  '1. Start Scanning \n-Open iSpeedScan, On the start screen, use the Picture/PDF slider to select your preferred mode\n*For convenience, after a few moments the app automatically opens in the last mode you used unless you change it before scanning',
                                   textAlign: TextAlign.start,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
@@ -157,7 +157,7 @@ class _HowtoWidgetState extends State<HowtoWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     3.0, 7.0, 3.0, 0.0),
                                 child: Text(
-                                  '2. Capture a Document: Simply hover your device over the document, and the camera will automatically detect and scan it. There is a manual capture setting also.  Move as many documents as you need, scanning them all effortlessly.',
+                                  '2. Select Your Mode\n-Scan as Picture: Opens immediately, allowing you to scan and save images directly to your gallery\n-Scan as PDF: Opens a PDF Scanner where you can scan multiple pages before finalizing and saving them as a single PDF',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -170,7 +170,7 @@ class _HowtoWidgetState extends State<HowtoWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     3.0, 7.0, 3.0, 0.0),
                                 child: Text(
-                                  '3. Save to Gallery: With just one click, save all your scanned documents to your device\'s photo gallery.',
+                                  '3. Capture a Document (either mode)\n-Hover your device over the document, and the scanner will automatically detect and scan it\n-A manual capture option is also available for more control\n-Scan multiple documents quickly and effortlessly\n*You can edit individual pages before saving by tapping the thumbnails in the bottom left, which opens your device’s native tools for basic editing (edits can also be made later after saving)',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -183,7 +183,7 @@ class _HowtoWidgetState extends State<HowtoWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     3.0, 7.0, 3.0, 0.0),
                                 child: Text(
-                                  '4. View or Share: You can easily share the photos via email, messaging, cloud storage, and social media using your device\'s native share options on iOS and Android. Additionally, upload the photos to any document management system of your choice.',
+                                  '4. Save & Organize\n-Scan as Picture: Saves each scan directly to your device’s gallery\n-Scan as PDF: After scanning, you’ll be taken to the next screen where you can share, save, upload, message, or email your PDF',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -196,7 +196,7 @@ class _HowtoWidgetState extends State<HowtoWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     3.0, 7.0, 3.0, 0.0),
                                 child: Text(
-                                  'Privacy and Security: Your documents are securely stored in your device\'s gallery. We do not store your documents or photos in our app, ensuring that your data remains private and secure. iSpeedScan takes your privacy seriously.',
+                                  '5. View, Share & Manage\n-Share your scans via email, messaging, cloud storage, uploads, or social media using your device’s native share options\n-Once saved, you can use your standard operating system tools to edit, share, save, upload, message, or email your PDF as needed',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -209,7 +209,33 @@ class _HowtoWidgetState extends State<HowtoWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     3.0, 7.0, 3.0, 0.0),
                                 child: Text(
-                                  'Our Mission: We aim to create simple and easy-to-use apps where the core function is met as efficiently as possible. We just stick to the core function!',
+                                  '*Main Menu & Mode Selection\n-Need to switch modes? Tap Cancel during scanning to return to the main menu, where you can select Scan as Image or Scan as PDF before resuming\n-For convenience, the app automatically opens in the last mode you used unless you change it before scanning',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    3.0, 7.0, 3.0, 0.0),
+                                child: Text(
+                                  '*Privacy & Security: Your documents are securely stored in your device’s gallery\n-iSpeedScan does not store your files, ensuring complete privacy',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Readex Pro',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    3.0, 7.0, 3.0, 0.0),
+                                child: Text(
+                                  '*Our Mission: We focus on simplicity, efficiency, and privacy—providing the tools you need without unnecessary extras',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -226,7 +252,8 @@ class _HowtoWidgetState extends State<HowtoWidget>
                                     context.pushNamed(
                                       'scanner',
                                       extra: <String, dynamic>{
-                                        kTransitionInfoKey: const TransitionInfo(
+                                        kTransitionInfoKey:
+                                            const TransitionInfo(
                                           hasTransition: true,
                                           transitionType:
                                               PageTransitionType.bottomToTop,
@@ -237,10 +264,12 @@ class _HowtoWidgetState extends State<HowtoWidget>
                                   text: 'Scan Now',
                                   options: FFButtonOptions(
                                     height: 40.0,
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        24.0, 0.0, 24.0, 0.0),
-                                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            24.0, 0.0, 24.0, 0.0),
+                                    iconPadding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
                                     color: FlutterFlowTheme.of(context).primary,
                                     textStyle: FlutterFlowTheme.of(context)
                                         .titleSmall

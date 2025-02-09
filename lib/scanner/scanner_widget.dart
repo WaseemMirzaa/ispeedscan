@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:permission_handler_platform_interface/permission_handler_platform_interface.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../helper/pdf_creation.dart';
@@ -30,7 +28,7 @@ class ScannerWidget extends StatefulWidget {
 class _ScannerWidgetState extends State<ScannerWidget>
     with TickerProviderStateMixin {
   late ScannerModel _model;
-  bool isPhotoMode = true;
+  bool? isPhotoMode;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -212,81 +210,74 @@ class _ScannerWidgetState extends State<ScannerWidget>
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          16.0, 12.0, 16.0, 0.0),
-                      child: Container(
-                        width: double.infinity,
-                        height: 60.0,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 5.0,
-                              color: Color(0x3416202A),
-                              offset: Offset(
-                                0.0,
-                                2.0,
-                              ),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(12.0),
-                          shape: BoxShape.rectangle,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    'Selected Mode: ',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
-                                        ),
+                    if (isPhotoMode != null)
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            16.0, 12.0, 16.0, 0.0),
+                        child: Container(
+                          width: double.infinity,
+                          height: 60.0,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            boxShadow: const [
+                              BoxShadow(
+                                blurRadius: 5.0,
+                                color: Color(0x3416202A),
+                                offset: Offset(
+                                  0.0,
+                                  2.0,
+                                ),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(12.0),
+                            shape: BoxShape.rectangle,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 0.0, 0.0),
+                                    child: Text(
+                                      'Mode: ',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyLarge
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            letterSpacing: 0.0,
+                                          ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("PDF"),
-                                  Switch(
-                                    value: isPhotoMode,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isPhotoMode = value;
-                                      });
-                                      _toggleMode(isPhotoMode);
-                                    },
-                                    activeColor: Colors.blue,
-                                    inactiveThumbColor: Colors.grey,
-                                  ),
-                                  Text("Photo"),
-                                ],
-                              ),
-                              // Align(
-                              //   alignment: const AlignmentDirectional(0.9, 0.0),
-                              //   child: Icon(
-                              //     Icons.arrow_forward_ios,
-                              //     color: FlutterFlowTheme.of(context)
-                              //         .secondaryText,
-                              //     size: 18.0,
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                        ).animateOnPageLoad(
-                            animationsMap['rowOnPageLoadAnimation1']!),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("PDF"),
+                                    Switch(
+                                      value: isPhotoMode!,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isPhotoMode = value;
+                                        });
+                                        _toggleMode(isPhotoMode!);
+                                      },
+                                      activeColor: Colors.blue,
+                                      inactiveThumbColor: Colors.grey,
+                                    ),
+                                    Text("Photo"),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ).animateOnPageLoad(
+                              animationsMap['rowOnPageLoadAnimation1']!),
+                        ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
                           16.0, 12.0, 16.0, 0.0),
@@ -591,7 +582,7 @@ class _ScannerWidgetState extends State<ScannerWidget>
                       child: Align(
                         alignment: const AlignmentDirectional(0.0, 0.0),
                         child: Text(
-                          'Check your Photo Gallery for your Saved Document(s)',
+                          'Check your Photo Gallery for your Saved Photo(s)',
                           textAlign: TextAlign.start,
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
@@ -710,11 +701,14 @@ class _ScannerWidgetState extends State<ScannerWidget>
     if (images.isEmpty) return;
 
     final time = DateTime.now(); // Format: MM.dd.yy_h.mmAM/PM
+
     String formattedDate = DateFormat('MM.dd.yy_h.mma').format(time);
 
     String name = 'iSpeedScan_$formattedDate.pdf';
 
-    if (!isPhotoMode) {
+    isPhotoMode = await PreferenceService.getMode();
+
+    if (!isPhotoMode!) {
       LoadingDialog.show(context);
 
       List<File> imageFiles = [];
@@ -751,14 +745,6 @@ class _ScannerWidgetState extends State<ScannerWidget>
 
   Future<void> saveAndSharePdf(Uint8List pdfBytes, String fileName) async {
     try {
-      // Request permission (needed only for Android, not iOS)
-      // if (Platform.isAndroid) {
-      //   if (await Permission.storage.request().isDenied) {
-      //     throw Exception('Storage permission denied.');
-      //   }
-      // }
-
-      // Define file path
       late String filePath;
 
       if (Platform.isAndroid) {
@@ -792,18 +778,7 @@ class _ScannerWidgetState extends State<ScannerWidget>
 }
 
 class LoadingDialog {
-  // static bool isShowing = false;
-  // static bool isImagePickerCalled = false;
-  // static bool isAlreadyCancelled = false;
-
   static void show(BuildContext context, {String message = "Creating PDF..."}) {
-    // if (isAlreadyCancelled) {
-    //   isAlreadyCancelled = false;
-    //   return;
-    // }
-
-    // isShowing = true;
-
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -830,11 +805,6 @@ class LoadingDialog {
   }
 
   static void hide(BuildContext context, {bool isImagePickerCalled = false}) {
-    // isShowing = false?
-
-    // Timer(Duration(seconds: 1), () {
-
     Navigator.of(context, rootNavigator: true).pop(); // Closes the dialog
-    // });
   }
 }
