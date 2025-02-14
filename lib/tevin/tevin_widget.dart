@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -22,8 +24,24 @@ class _TevinWidgetState extends State<TevinWidget>
   final animationsMap = <String, AnimationInfo>{};
 
   @override
+  void dispose() {
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    //   DeviceOrientation.landscapeLeft,
+    //   DeviceOrientation.landscapeRight,
+    // ]);
+    _model.dispose();
+
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     _model = createModel(context, () => TevinModel());
 
     animationsMap.addAll({
@@ -55,13 +73,6 @@ class _TevinWidgetState extends State<TevinWidget>
   }
 
   @override
-  void dispose() {
-    _model.dispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -84,7 +95,7 @@ class _TevinWidgetState extends State<TevinWidget>
             },
             child: Icon(
               Icons.arrow_back_ios,
-              color: FlutterFlowTheme.of(context).primaryText,
+              color: Colors.white,
               size: 30.0,
             ),
           ),

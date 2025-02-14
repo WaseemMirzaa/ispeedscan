@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -36,13 +37,27 @@ class _ScannerWidgetState extends State<ScannerWidget>
 
   @override
   void initState() {
+    _setPortraitMode();
+
     super.initState();
 
     _loadMode();
   }
 
   @override
+  Future<void> _setPortraitMode() async {
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+  }
+
   void dispose() {
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    //   DeviceOrientation.landscapeLeft,
+    //   DeviceOrientation.landscapeRight,
+    // ]);
     _model.dispose();
 
     super.dispose();
@@ -60,7 +75,7 @@ class _ScannerWidgetState extends State<ScannerWidget>
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primary,
-          automaticallyImplyLeading: false,
+          // automaticallyImplyLeading: false,
           title: Text(
             valueOrDefault<String>(
               _model.teststCopy,
@@ -74,7 +89,7 @@ class _ScannerWidgetState extends State<ScannerWidget>
                 ),
           ),
           actions: [],
-          centerTitle: false,
+          centerTitle: true,
           elevation: 2.0,
         ),
         body: SafeArea(
@@ -129,9 +144,15 @@ class _ScannerWidgetState extends State<ScannerWidget>
                       highlightColor: Colors.transparent,
                       onTap: () async {
                         await requestPermission(cameraPermission);
+                        await SystemChrome.setPreferredOrientations([
+                          DeviceOrientation.portraitUp,
+                        ]);
                         var images = await actions.scannerAction(
                           context,
                         );
+                        // await SystemChrome.setPreferredOrientations([
+                        //   DeviceOrientation.portraitUp,
+                        // ]);
 
                         checkPdfCreation(images);
                       },
@@ -153,6 +174,9 @@ class _ScannerWidgetState extends State<ScannerWidget>
                           context,
                         );
 
+                        // await SystemChrome.setPreferredOrientations([
+                        //   DeviceOrientation.portraitUp,
+                        // ]);
                         checkPdfCreation(images);
 
                         safeSetState(() {});
@@ -308,16 +332,7 @@ class _ScannerWidgetState extends State<ScannerWidget>
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              context.pushNamed(
-                                'howto',
-                                extra: <String, dynamic>{
-                                  kTransitionInfoKey: const TransitionInfo(
-                                    hasTransition: true,
-                                    transitionType:
-                                        PageTransitionType.topToBottom,
-                                  ),
-                                },
-                              );
+                              context.pushNamed('howto');
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -629,6 +644,10 @@ class _ScannerWidgetState extends State<ScannerWidget>
       var images = await actions.scannerAction(
         context,
       );
+
+      await SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]);
 
       checkPdfCreation(images);
     });

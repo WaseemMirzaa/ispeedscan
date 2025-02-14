@@ -92,6 +92,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "convert",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/convert-3.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "cross_file",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/cross_file-0.3.4+2",
       "packageUri": "lib/",
@@ -608,6 +614,18 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "syncfusion_flutter_core",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/syncfusion_flutter_core-28.2.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "syncfusion_flutter_pdf",
+      "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/syncfusion_flutter_pdf-28.2.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "synchronized",
       "rootUri": "file:///Users/user/.pub-cache/hosted/pub.dev/synchronized-3.3.0+3",
       "packageUri": "lib/",
@@ -752,7 +770,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2025-02-09T21:32:26.755597Z",
+  "generated": "2025-02-14T15:37:01.129636Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///Users/user/fvm/versions/3.24.3",

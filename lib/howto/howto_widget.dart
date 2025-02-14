@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -25,6 +27,10 @@ class _HowtoWidgetState extends State<HowtoWidget>
   @override
   void initState() {
     super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+
     _model = createModel(context, () => HowtoModel());
 
     animationsMap.addAll({
@@ -69,6 +75,12 @@ class _HowtoWidgetState extends State<HowtoWidget>
 
   @override
   void dispose() {
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    //   DeviceOrientation.landscapeLeft,
+    //   DeviceOrientation.landscapeRight,
+    // ]);
     _model.dispose();
 
     super.dispose();
@@ -97,7 +109,7 @@ class _HowtoWidgetState extends State<HowtoWidget>
             },
             child: Icon(
               Icons.arrow_back_ios_outlined,
-              color: FlutterFlowTheme.of(context).secondaryText,
+              color: Colors.white,
               size: 30.0,
             ),
           ),

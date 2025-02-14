@@ -19,6 +19,9 @@ Future<List<String>> scannerAction(BuildContext context) async {
   List<String> pictures = [];
   String resultMessage = '';
 
+  var isPhotoMode = await PreferenceService.getMode();
+  // if()
+
   try {
     pictures = await CunningDocumentScanner.getPictures(
             isGalleryImportAllowed: true) ??
@@ -40,8 +43,8 @@ Future<List<String>> scannerAction(BuildContext context) async {
         .replaceAll(':', '-');
 
     String name = 'ispeedscan$time.pdf';
-
-    await ImageGallerySaver.saveFile(picture, name: name);
+    print('🔴🔴🔴🔴🔴 $isPhotoMode');
+    if (isPhotoMode) await ImageGallerySaver.saveFile(picture, name: name);
   }
 
   return pictures;

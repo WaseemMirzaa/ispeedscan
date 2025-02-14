@@ -65,7 +65,8 @@ Future<void> pdfMultiImg(SendPort sendPort
     for (var fileup in params.fileupList) {
       final serializableFile = SerializableFile.fromMap(fileup);
 
-      Uint8List? fileupBytes = serializableFile.bytes;
+      Uint8List? fileupBytes = resizeAndCompressImage(serializableFile.bytes,
+          maxHeight: 660 * 2, maxWidth: 880 * 2, quality: 100);
 
       if (fileupBytes != null) {
         // Decode the image
@@ -192,6 +193,43 @@ Future<void> pdfMultiImg(SendPort sendPort
       name: '${params.filename}.pdf',
     ));
   }
+}
+
+/// Resize and compress an image while maintaining aspect ratio
+Uint8List resizeAndCompressImage(
+  Uint8List imageBytes, {
+  int maxWidth = 800,
+  int maxHeight = 800,
+  int quality = 70,
+}) {
+  // Decode the image
+  final img.Image? image = img.decodeImage(imageBytes);
+  if (image == null) return imageBytes; // Return original if decoding fails
+
+  // Get original dimensions
+  int originalWidth = image.width;
+  int originalHeight = image.height;
+
+  // Calculate new dimensions while maintaining aspect ratio
+  double aspectRatio = originalWidth / originalHeight;
+  int newWidth = originalWidth;
+  int newHeight = originalHeight;
+
+  if (newWidth > maxWidth) {
+    newWidth = maxWidth;
+    newHeight = (newWidth / aspectRatio).round();
+  }
+  if (newHeight > maxHeight) {
+    newHeight = maxHeight;
+    newWidth = (newHeight * aspectRatio).round();
+  }
+
+  // Resize the image
+  final img.Image resized =
+      img.copyResize(image, width: newWidth, height: newHeight);
+
+  // Compress the image (JPG format)
+  return Uint8List.fromList(img.encodeJpg(resized, quality: quality));
 }
 
 //todo using isolate

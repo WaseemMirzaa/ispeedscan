@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -24,6 +26,9 @@ class _SimplicityWidgetState extends State<SimplicityWidget>
   @override
   void initState() {
     super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     _model = createModel(context, () => SimplicityModel());
 
     animationsMap.addAll({
@@ -44,6 +49,12 @@ class _SimplicityWidgetState extends State<SimplicityWidget>
 
   @override
   void dispose() {
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    //   DeviceOrientation.landscapeLeft,
+    //   DeviceOrientation.landscapeRight,
+    // ]);
     _model.dispose();
 
     super.dispose();
@@ -72,7 +83,7 @@ class _SimplicityWidgetState extends State<SimplicityWidget>
             },
             child: Icon(
               Icons.arrow_back_ios,
-              color: FlutterFlowTheme.of(context).primaryText,
+              color: Colors.white,
               size: 30.0,
             ),
           ),
@@ -105,7 +116,8 @@ class _SimplicityWidgetState extends State<SimplicityWidget>
                   tabletLandscape: false,
                 ))
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        4.0, 0.0, 0.0, 0.0),
                     child: Text(
                       'Simplicity and Efficiency',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -116,7 +128,8 @@ class _SimplicityWidgetState extends State<SimplicityWidget>
                     ),
                   ),
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 0.0, 16.0, 0.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,8 +171,8 @@ class _SimplicityWidgetState extends State<SimplicityWidget>
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0.0, 7.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 7.0, 0.0, 0.0),
                         child: Text(
                           'Explore our range of client-side apps and experience the difference simplicity, efficiency, and security can make in your daily tasks.',
                           style:

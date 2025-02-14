@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../helper/shared_preference_service.dart';
@@ -14,7 +15,23 @@ class _ToggleModeScreenState extends State<ToggleModeScreen> {
   @override
   void initState() {
     super.initState();
+    // Lock to portrait mode
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     _loadMode(); // Load saved mode when screen starts
+  }
+
+  @override
+  void dispose() {
+    // Reset orientation when leaving screen
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    //   DeviceOrientation.landscapeLeft,
+    //   DeviceOrientation.landscapeRight,
+    // ]);
+    super.dispose();
   }
 
   @override
