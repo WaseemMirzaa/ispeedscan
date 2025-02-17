@@ -29,6 +29,8 @@ Future<List<String>> scannerAction(BuildContext context) async {
     _pictures = pictures;
   } catch (exception) {
     // Handle exception here
+    throw exception;
+
     return pictures;
   }
 

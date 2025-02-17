@@ -37,9 +37,9 @@ class _ScannerWidgetState extends State<ScannerWidget>
 
   @override
   void initState() {
-    _setPortraitMode();
-
     super.initState();
+
+    _setPortraitMode();
 
     _loadMode();
   }
@@ -144,17 +144,15 @@ class _ScannerWidgetState extends State<ScannerWidget>
                       highlightColor: Colors.transparent,
                       onTap: () async {
                         await requestPermission(cameraPermission);
-                        await SystemChrome.setPreferredOrientations([
-                          DeviceOrientation.portraitUp,
-                        ]);
-                        var images = await actions.scannerAction(
-                          context,
-                        );
-                        // await SystemChrome.setPreferredOrientations([
-                        //   DeviceOrientation.portraitUp,
-                        // ]);
-
-                        checkPdfCreation(images);
+                        try {
+                          var images = await actions.scannerAction(
+                            context,
+                          );
+                          checkPdfCreation(images);
+                        } catch (e) {
+                          // showErrorAlert(context, 'Error2',
+                          //     ' Error while picking images${e}');
+                        }
                       },
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
@@ -170,14 +168,16 @@ class _ScannerWidgetState extends State<ScannerWidget>
                     FFButtonWidget(
                       onPressed: () async {
                         await requestPermission(cameraPermission);
-                        var images = await actions.scannerAction(
-                          context,
-                        );
 
-                        // await SystemChrome.setPreferredOrientations([
-                        //   DeviceOrientation.portraitUp,
-                        // ]);
-                        checkPdfCreation(images);
+                        try {
+                          var images = await actions.scannerAction(
+                            context,
+                          );
+                          checkPdfCreation(images);
+                        } catch (e) {
+                          // showErrorAlert(context, 'Error3',
+                          //     ' Error while picking images${e}');
+                        }
 
                         safeSetState(() {});
                       },
@@ -641,15 +641,14 @@ class _ScannerWidgetState extends State<ScannerWidget>
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await requestPermission(cameraPermission);
-      var images = await actions.scannerAction(
-        context,
-      );
-
-      await SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-      ]);
-
-      checkPdfCreation(images);
+      try {
+        var images = await actions.scannerAction(
+          context,
+        );
+        checkPdfCreation(images);
+      } catch (e) {
+        // showErrorAlert(context, 'Error1', ' Error while picking images${e}');
+      }
     });
 
     animationsMap.addAll({
@@ -717,7 +716,10 @@ class _ScannerWidgetState extends State<ScannerWidget>
   }
 
   Future<void> checkPdfCreation(List<String> images) async {
-    if (images.isEmpty) return;
+    if (images.isEmpty) {
+      // showErrorAlert(context, 'Error', 'Empty Images');
+      return;
+    }
 
     final time = DateTime.now(); // Format: MM.dd.yy_h.mmAM/PM
 
@@ -731,8 +733,6 @@ class _ScannerWidgetState extends State<ScannerWidget>
       LoadingDialog.show(context);
 
       List<File> imageFiles = [];
-
-      // print('🟢🟢🟢🟢 isPDF $isPdf');
 
       List<Uint8List> imageBytesList = [];
       //
@@ -757,6 +757,9 @@ class _ScannerWidgetState extends State<ScannerWidget>
           selectedIndex: 0); // Get the index of the selected orientation
 
       var pdf2 = await pdfMultiImgWithIsolate(params);
+      if (pdf2.bytes == null) {
+        // showErrorAlert(context, 'Error', 'PDF Creation Error');
+      }
       LoadingDialog.hide(context);
       saveAndSharePdf(pdf2.bytes!, name);
     }
@@ -790,6 +793,8 @@ class _ScannerWidgetState extends State<ScannerWidget>
 
       print('File saved and ready to share.');
     } catch (e) {
+      // showErrorAlert(context, 'Error', 'Saving Error $e');
+
       // Handle errors gracefully
       print('Error saving or sharing PDF: $e');
     }

@@ -2,6 +2,8 @@
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -184,7 +186,11 @@ Future<void> pdfMultiImg(SendPort sendPort
       }
     }
 
+    await Future.delayed(Duration(milliseconds: 600));
+
     final Uint8List pdfBytes = await pdf.save();
+
+    await Future.delayed(Duration(milliseconds: 1200));
 
     print('🔴🔴🔴🔴🔴 ${params.filename}');
 
@@ -265,3 +271,23 @@ class PdfMultiImgParams {
     );
   }
 }
+
+// void showErrorAlert(BuildContext context, String title, String message) {
+//   showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return AlertDialog(
+//         title: Text(title, style: TextStyle(color: Colors.red)),
+//         content: Text(message),
+//         actions: [
+//           TextButton(
+//             onPressed: () {
+//               Navigator.of(context).pop(); // Close the dialog
+//             },
+//             child: Text('OK'),
+//           ),
+//         ],
+//       );
+//     },
+//   );
+// }
